@@ -11,21 +11,21 @@ import { useEffect, useState } from "react";
 import { login } from "@/redux/action/authAct";
 import { redirect, useRouter } from "next/navigation";
 
-export const LoginPage = () => {
-  const loading = useSelector(
-    (state: RootState) => state.auth.authLoading,
+export function LoginPage() {
+  const {authLoading,user} = useSelector(
+    (state: RootState) => state.auth,
     shallowEqual
   );
   const dispatch: AppDispatch = useDispatch();
   const router = useRouter();
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const loginSession = localStorage.getItem("login");
+
   useEffect(() => {
-    if (loginSession) {
+    if (user) {
       redirect("/chats");
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const onLogin = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -52,8 +52,7 @@ export const LoginPage = () => {
             <img
               src="https://tecdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg"
               className="w-full "
-              alt="Phone image"
-            />
+              alt="Phone image" />
           </div>
 
           {/* <!-- Right column container with form --> */}
@@ -72,8 +71,7 @@ export const LoginPage = () => {
                   type="text"
                   className="w-full px-2 py-1 border-2 rounded-lg"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
+                  onChange={(e) => setEmail(e.target.value)} />
               </div>
               <div className="w-full flex flex-col mb-5">
                 <label htmlFor="password" className="font-bold text-sm">
@@ -85,8 +83,7 @@ export const LoginPage = () => {
                   type="password"
                   className="w-full px-2 py-1 border-2 rounded-lg"
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
+                  onChange={(e) => setPassword(e.target.value)} />
               </div>
 
               {/* <!-- Remember me checkbox --> */}
@@ -105,11 +102,11 @@ export const LoginPage = () => {
                 </Link>
               </div>
               <button
-                disabled={loading}
+                disabled={authLoading}
                 className={`w-full bg-black hover:shadow-lg py-2 text-white rounded-lg`}
                 type="submit"
               >
-                {loading ? "loading..." : "login"}
+                {authLoading ? "loading..." : "login"}
               </button>
 
               {/* <!-- Divider --> */}
@@ -122,7 +119,7 @@ export const LoginPage = () => {
               {/* <!-- Social login buttons --> */}
               <button
                 className="w-full bg-white py-1 rounded-sm hover:shadow-lg font-bold   gap-4 border-2 flex items-center justify-center"
-                disabled={loading}
+                disabled={authLoading}
                 type="button"
               >
                 <Image
@@ -130,8 +127,7 @@ export const LoginPage = () => {
                   height={30}
                   alt="google"
                   className="mr-4"
-                  src="/google.svg"
-                />
+                  src="/google.svg" />
                 <span>Continue with Google</span>
               </button>
             </form>
@@ -140,6 +136,6 @@ export const LoginPage = () => {
       </div>
     </section>
   );
-};
+}
 
 export default LoginPage;

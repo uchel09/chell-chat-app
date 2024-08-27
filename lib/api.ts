@@ -1,6 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-
-const server = "http://localhost:8000";
+import {server} from "./server"
 
 // TypeScript type for the response data
 interface ApiResponse<T = any> extends AxiosResponse<T> {}

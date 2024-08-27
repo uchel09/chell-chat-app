@@ -18,6 +18,9 @@ import Image from "next/image";
 import { FormEvent, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
+import Emoticon from "./_emoticon/Emoticon";
+import DeleteModal from "@/components/custom/modal/DeleteModal";
+import DropDownMenuConv from "./DropDown/DropdownMenuConv";
 interface ConversationProps {
   conversation: Conversation | null;
   token: string;
@@ -64,6 +67,9 @@ const ConversationView = ({
       toast.error("internal server Error");
     }
   };
+  const onDelete =()=>{
+    console.log("delete")
+  }
 
   return (
     <>
@@ -96,12 +102,13 @@ const ConversationView = ({
           <Hint label="call" sideOffset={5} side="bottom">
             <Phone className="cursor-pointer" />
           </Hint>
-
-          <button type="button" className="relative">
-            <Hint label="Menu" sideOffset={5} side="bottom">
-              <EllipsisVertical className="cursor-pointer" />
-            </Hint>
-          </button>
+          <DropDownMenuConv side="bottom" onDelete={onDelete}>
+            <button type="button" className="relative">
+              <Hint label="Menu" sideOffset={5} side="bottom">
+                <EllipsisVertical className="cursor-pointer" />
+              </Hint>
+            </button>
+          </DropDownMenuConv>
         </div>
       </div>
 
@@ -166,7 +173,11 @@ const ConversationView = ({
       <div className="w-full bg-transparent px-5 rounded-lg h-[60px] absolute bottom-0 flex justify-between items-center">
         <form onSubmit={onSubmit} className="w-full flex items-center gap-4">
           <div className="w-full flex items-center border-[#bae9ff] border px-3 py-1 bg-white gap-2 focus-within:border-2 focus-within:border-[#50b2fd] rounded-full">
-            <SmilePlus className="mr-3 cursor-pointer" color="#50b2fd" />
+            <Emoticon text={text} side="top" setText={setText}>
+              <button type="button">
+                <SmilePlus className="mr-3 cursor-pointer" color="#50b2fd" />
+              </button>
+            </Emoticon>
             <input
               type="text"
               value={text}

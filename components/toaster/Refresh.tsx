@@ -1,5 +1,6 @@
 "use client";
 
+import { server } from "@/lib/server";
 import { generateNewToken, logout } from "@/redux/action/authAct";
 import { setSocket } from "@/redux/slices/socketSlice";
 import { AppDispatch } from "@/redux/store";
@@ -13,7 +14,7 @@ const UseRefresh = () => {
     typeof window !== "undefined" ? localStorage.getItem("login") : null;
 
   useEffect(() => {
-    const socket: Socket = io(process.env.SERVER || "http://localhost:8000");
+    const socket: Socket = io(server!);
 
     const refreshToken = async () => {
       try {

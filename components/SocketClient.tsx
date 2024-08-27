@@ -2,8 +2,6 @@
 
 import { setUser } from "@/redux/slices/authSlice";
 import {
-  addMessage,
-  updateConversations,
   updateConversationsSocket,
 } from "@/redux/slices/conversationsSlice";
 import { AppDispatch, RootState } from "@/redux/store";
@@ -21,10 +19,7 @@ const SocketClient = () => {
     (state: RootState) => state.socket.socket,
     shallowEqual
   );
-  const { conversation, conversations } = useSelector(
-    (state: RootState) => state.conversation,
-    shallowEqual
-  );
+
 
   const dispatch: AppDispatch = useDispatch();
 
