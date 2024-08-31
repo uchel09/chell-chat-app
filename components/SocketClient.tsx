@@ -1,9 +1,7 @@
 "use client";
 
 import { setUser } from "@/redux/slices/authSlice";
-import {
-  updateConversationsSocket,
-} from "@/redux/slices/conversationsSlice";
+import { deleteMessage, updateConversationsSocket } from "@/redux/slices/conversationsSlice";
 import { AppDispatch, RootState } from "@/redux/store";
 
 import { User } from "@/types/user";
@@ -19,7 +17,6 @@ const SocketClient = () => {
     (state: RootState) => state.socket.socket,
     shallowEqual
   );
-
 
   const dispatch: AppDispatch = useDispatch();
 
@@ -64,6 +61,14 @@ const SocketClient = () => {
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, socket, token]);
+  useEffect(() => {
+    socket?.on(
+      "delete-message-toclient",
+      ({ messageId }: { messageId: string }) => {
+        dispatch(deleteMessage(messageId))
+      }
+    );
+  }, [dispatch, socket]);
 
   return null;
 };

@@ -99,6 +99,14 @@ const conversationSlice = createSlice({
     setConversation(state, action: PayloadAction<Conversation | null>) {
       state.conversation = action.payload;
     },
+    deleteMessage(state, action: PayloadAction<string>) {
+      if (state.messages) {
+        // Pastikan state.messages tidak null
+        state.messages = state.messages.filter(
+          (item) => item._id !== action.payload
+        );
+      }
+    },
   },
 });
 
@@ -112,5 +120,6 @@ export const {
   addMessage,
   updateConversations,
   updateConversationsSocket,
+  deleteMessage,
 } = conversationSlice.actions;
 export default conversationSlice.reducer;

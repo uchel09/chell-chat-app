@@ -16,6 +16,7 @@ export function LoginPage() {
     (state: RootState) => state.auth,
     shallowEqual
   );
+
   const dispatch: AppDispatch = useDispatch();
   const router = useRouter();
   const [email, setEmail] = useState<string>("");
@@ -26,7 +27,7 @@ export function LoginPage() {
       redirect("/chats");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [user]);
 
   const onLogin = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -58,7 +59,7 @@ export function LoginPage() {
           {/* <!-- Right column container with form --> */}
           <div className="md:w-8/12 lg:ml-6 lg:w-5/12">
             <h1 className="font-bold text-[30px] w-full text-center mb-4">
-              𝖈𝖍𝖊𝖑𝖑𝖌𝖗𝖆𝖒
+              𝖈𝖍𝖊𝖑𝖑chats
             </h1>
             <form onSubmit={onLogin}>
               <div className="w-full flex flex-col">

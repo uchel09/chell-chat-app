@@ -1,4 +1,4 @@
-import { deleteDataAPI, getDataAPI, postDataAPI } from "@/lib/api";
+import { deleteDataAPI, getDataAPI, patchDataAPI, postDataAPI, putDataAPI } from "@/lib/api";
 import { setLoadingUsers, setUsers } from "../slices/userSlice";
 import { AppThunk } from "../store";
 import { setUser } from "../slices/authSlice";
@@ -133,4 +133,19 @@ export const deleteFriend =
     } catch (error) {
       throw error;
     }
+  };
+
+export const updateProfile =
+  ({
+    link,
+    bio,
+    avatar,
+  }: {
+    link: string;
+    bio: string;
+    avatar: { publicId: string; imageUrl: string };
+  }): AppThunk =>
+  async (dispatch, getState) => {
+    const token = getState().auth.token;
+    const res = await patchDataAPI("users", { link, bio, avatar }, token);
   };

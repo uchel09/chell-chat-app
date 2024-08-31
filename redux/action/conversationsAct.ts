@@ -1,13 +1,15 @@
-import { getDataAPI, postDataAPI } from "@/lib/api";
+import { deleteDataAPI, getDataAPI, postDataAPI } from "@/lib/api";
 import { AppThunk } from "../store";
 import {
   addMessage,
+  deleteMessage,
   setConversations,
   setConversationsLoading,
   setMessages,
   setSendLoading,
   updateConversations,
 } from "../slices/conversationsSlice";
+import toast from "react-hot-toast";
 
 interface GetConversationsPayload {
   q?: string;
@@ -101,5 +103,31 @@ export const getMessages =
       dispatch(setMessages(res.data.messages));
     } catch (error) {
       console.log(error);
+    }
+  };
+
+export const deleteMessageById =
+  ({
+    messageId,
+    recipient,
+  }: {
+    messageId: string;
+    recipient: string;
+  }): AppThunk =>
+  async (dispatch, getState) => {
+    try {
+      const token = getState().auth.token;
+      const socket = getState().socket.socket;
+
+      const res = await deleteDataAPI(
+        `conversations/messages/${messageId}`,
+        token
+      );
+      dispatch(deleteMessage(messageId));
+      socket?.emit("delete-message", { messageId, recipient });
+      toast.success("message deleted");
+    } catch (error) {
+      console.log(error);
+      toast.error("internal server error");
     }
   };

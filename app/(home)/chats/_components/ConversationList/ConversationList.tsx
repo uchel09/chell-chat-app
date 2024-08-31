@@ -70,6 +70,12 @@ const ConversationList = ({
           const recipient = item.recipients.find(
             (recipient) => recipient._id !== user?._id
           );
+          const truncatedMessage = (message: string) => {
+            return message.length > 15
+              ? `${message.substring(0, 15)}...`
+              : message;
+          };
+
           return (
             <div
               key={index}
@@ -87,13 +93,13 @@ const ConversationList = ({
                   alt="profile-image"
                   width={70}
                   height={70}
-                  className="rounded-full border-2 border-black"
+                  className="rounded-full border-2 border-black w-[70px] h-[70px] object-cover"
                 />
               </div>
               <div className="flex flex-col gap-2 items-center h-full">
                 <div className="font-bold">{recipient?.username}</div>
                 <div className="font-medium text-gray-400 text-sm ">
-                  {item.lastMessage}
+                  {truncatedMessage(item.lastMessage)}
                 </div>
               </div>
               <div

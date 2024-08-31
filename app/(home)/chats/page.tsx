@@ -70,10 +70,13 @@ const ChatsPage = () => {
             >
               <Image
                 alt="profile-image"
-                src="https://img.freepik.com/free-vector/illustration-businessman_53876-5856.jpg?size=626&ext=jpg&ga=GA1.1.1448711260.1707091200&semt=ais"
+                src={
+                  user?.avatar?.imageUrl ||
+                  "https://img.freepik.com/free-vector/illustration-businessman_53876-5856.jpg?size=626&ext=jpg&ga=GA1.1.1448711260.1707091200&semt=ais"
+                }
                 width={90}
                 height={90}
-                className="rounded-full object-contain"
+                className="rounded-full object-cover w-[45px] h-[45px]"
               />
             </div>
           </Hint>
@@ -116,7 +119,6 @@ const ChatsPage = () => {
           token={token}
           conversation={conversation}
           conversations={conversations}
-
         />
       </div>
       {openModalFriends && (

@@ -21,6 +21,8 @@ import { useDispatch } from "react-redux";
 import Emoticon from "./_emoticon/Emoticon";
 import DeleteModal from "@/components/custom/modal/DeleteModal";
 import DropDownMenuConv from "./DropDown/DropdownMenuConv";
+import DropDownMessage from "./DropDown/DropDownMessage";
+import MessagesComponent from "./Messages";
 interface ConversationProps {
   conversation: Conversation | null;
   token: string;
@@ -67,9 +69,9 @@ const ConversationView = ({
       toast.error("internal server Error");
     }
   };
-  const onDelete =()=>{
-    console.log("delete")
-  }
+  const onDelete = () => {
+    console.log("delete");
+  };
 
   return (
     <>
@@ -84,14 +86,14 @@ const ConversationView = ({
               }
               width={90}
               height={90}
-              className="rounded-full object-contain"
+              className="rounded-full object-cover w-[45px] h-[45px]"
             />
           </div>
           <div className="flex flex-col">
             <span className="font-bold text-[#fff7f7]">
               {recipient?.username}
             </span>
-            <span className="text-sm text-[#fff7f7]">offline</span>
+
           </div>
         </div>
         {/* right menu header */}
@@ -112,6 +114,7 @@ const ConversationView = ({
         </div>
       </div>
 
+      {/* Messages  */}
       <div
         className="flex-1 overflow-y-auto gap-10   h-full w-full  "
         style={{
@@ -121,52 +124,7 @@ const ConversationView = ({
           backgroundPosition: "center",
         }}
       >
-        <div className="w-full flex flex-col-reverse gap-5 h-full px-4 pb-[60px] pt-[20px] overflow-y-auto">
-          {/* message List =========================== */}
-          {messages?.map((message, index) => {
-            const isUser: boolean = user?._id === message.sender;
-            const createdAt = new Date(message.createdAt);
-            const options: Intl.DateTimeFormatOptions = {
-              weekday: "short", // Menampilkan nama hari
-              hour: "2-digit",
-              minute: "2-digit",
-            };
-
-            const formattedDate = createdAt.toLocaleDateString(
-              "id-ID",
-              options
-            );
-            return (
-              <div
-                className={`w-full flex ${!isUser && "justify-end"}`}
-                key={index}
-              >
-                <div
-                  className={`max-w-[47%] relative bg-red pt-2 pb-4 px-3 ${
-                    isUser ? "bg-[#bae9ff] order-1" : "bg-[white] order-2"
-                  } shadow-xl rounded-2xl`}
-                >
-                  {message.text}
-                  <span className="text-[12px] text-gray-500 absolute bottom-0 right-2"></span>
-                </div>
-                <span
-                  className={`text-[12px] text-gray-500 flex h-full flex-col justify-end ${
-                    isUser ? "order-2" : "order-1"
-                  }`}
-                >
-                  {formattedDate}
-                </span>
-              </div>
-            );
-          })}
-
-          {/* terakhir */}
-          <div className="w-full flex justify-center">
-            <div className="py-2 px-3 cursor-pointer bg-[#bae9ff] shadow-2xl  rounded-lg">
-              Muat pesan sebelumnya
-            </div>
-          </div>
-        </div>
+        <MessagesComponent user={user} messages={messages} />
       </div>
 
       {/* footer */}

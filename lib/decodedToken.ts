@@ -27,7 +27,6 @@ export const decodedUser = (token: string): User => {
   try {
     // Deklarasikan tipe DecodedUser untuk jwtDecode
     const decoded = jwtDecode<DecodedToken>(token).user;
-    console.log(decoded);
     // Kembalikan data yang telah di-decode dengan default values jika perlu
     return {
       _id: decoded._id ?? "",
