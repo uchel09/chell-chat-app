@@ -9,6 +9,13 @@ const nextConfig = {
       { protocol: "https", hostname: "lh3.googleusercontent.com" },
       { protocol: "https", hostname: "res.cloudinary.com" },
     ],
+
+  },
+    env: {
+    BASE_URL:
+      process.env.NODE_ENV === "development"
+        ? "http://localhost:3000"
+        : "https://chellchats.vercel.app",
   },
 };
 
