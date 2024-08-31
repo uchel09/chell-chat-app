@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
 import { login } from "@/redux/action/authAct";
 import { redirect, useRouter } from "next/navigation";
 
-export function LoginPage() {
+ function LoginPage() {
   const {authLoading,user} = useSelector(
     (state: RootState) => state.auth,
     shallowEqual

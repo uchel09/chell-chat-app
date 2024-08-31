@@ -11,8 +11,8 @@ import { redirect, useRouter } from "next/navigation";
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
 
 const RegisterPage: React.FC = () => {
-  const loading = useSelector(
-    (state: RootState) => state.auth.authLoading,
+  const {user,authLoading} = useSelector(
+    (state: RootState) => state.auth,
     shallowEqual
   );
   const dispatch: AppDispatch = useDispatch();
@@ -23,13 +23,12 @@ const RegisterPage: React.FC = () => {
   const [email, setEmail] = React.useState<string>("");
   const [password, setPassword] = React.useState<string>("");
 
-  const loginSession = localStorage.getItem("login");
   useEffect(() => {
-    if (loginSession) {
+    if (user) {
       redirect("/chats");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [user]);
 
   const handleGenderChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
@@ -145,7 +144,7 @@ const RegisterPage: React.FC = () => {
                 </Link>
               </div>
               <button
-                disabled={loading}
+                disabled={authLoading}
                 className={`w-full bg-black hover:shadow-lg py-2 text-white rounded-lg`}
                 type="submit"
               >
@@ -161,7 +160,7 @@ const RegisterPage: React.FC = () => {
 
               {/* <!-- Social login buttons --> */}
               <button
-                disabled={loading}
+                disabled={authLoading}
                 type="button"
                 className="w-full bg-white py-1 rounded-sm hover:shadow-lg font-bold gap-4 border-2 flex items-center justify-center"
               >
